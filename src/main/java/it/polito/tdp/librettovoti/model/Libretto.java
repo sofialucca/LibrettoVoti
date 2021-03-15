@@ -2,12 +2,15 @@ package it.polito.tdp.librettovoti.model;
 
 import java.util.*;
 
+//si comporta da Modello
+
 public class Libretto {
 
 	private List<Voto> listaVoti;
 	
 	public Libretto() {
 		listaVoti=new ArrayList<>();
+		System.out.println("Sono libretto e sono vivo."); //usato per controllare funzionamento
 	}
 	
 	public void add(Voto voto) {
