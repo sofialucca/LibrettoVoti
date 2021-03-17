@@ -7,14 +7,17 @@ import java.util.*;
 public class Libretto {
 
 	private List<Voto> listaVoti;
+	private Map<String,Voto> votiMap; //identity Map--> mappa per conservare identità oggetti
 	
 	public Libretto() {
 		listaVoti=new ArrayList<>();
-		System.out.println("Sono libretto e sono vivo."); //usato per controllare funzionamento
+		votiMap=new HashMap<>();
+		//System.out.println("Sono libretto e sono vivo."); //usato per controllare funzionamento
 	}
 	
 	public void add(Voto voto) {
 		listaVoti.add(voto);
+		votiMap.put(voto.getNomeCorso(), voto);
 	}
 	
 	/*
@@ -43,8 +46,56 @@ public class Libretto {
 		return risultato;
 	}
 	
+	/**
+	 * Verifica se nel libretto c'è già un voto con lo stesso esame e la stessa valutazione
+	 * @param v
+	 * @return
+	 */
+	public boolean esisteDuplicato(Voto v) {
+//		boolean trovato=false;
+//		for(Voto voto: this.listaVoti) {
+//			if(voto.getNomeCorso().equals(v.getNomeCorso())&&voto.getVoto()==v.getVoto()) {
+//				trovato=true;
+//				break;
+//			}
+//		}
+//		return trovato;
+		
+		Voto trovato=this.votiMap.get(v.getNomeCorso());
+		if(trovato==null) {
+			return false;
+		}else if(trovato.getVoto()==v.getVoto()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
-
+	/**
+	 * Verifica se nel libretto c'è gia un esame con stesso nome ma voto diverso
+	 * @param v
+	 * @return
+	 */
+	public boolean esisteConflitto(Voto v) {
+//		boolean trovato=false;
+//		for(Voto voto: this.listaVoti) {
+//			if(voto.getNomeCorso().equals(v.getNomeCorso())&&voto.getVoto()!=v.getVoto()) {
+//				trovato=true;
+//				break;
+//			}
+//		}
+//		return trovato;
+		
+		Voto trovato=this.votiMap.get(v.getNomeCorso());
+		if(trovato==null) {
+			return false;
+		}else if(trovato.getVoto()!=v.getVoto()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public Libretto votiUguali(int punteggio) {
 		Libretto risultato=new Libretto();
 		for(Voto v:this.listaVoti) {
@@ -63,14 +114,16 @@ public class Libretto {
 	 */
 	
 	public Voto ricercaCorso(String nomeCorso) {
-		Voto risultato=null;
-		for(Voto v:this.listaVoti) {
-			if(v.getNomeCorso().equals(nomeCorso)) {	//usare equals e non compareTo
-				risultato=v;
-				break;
-			}
-		}
-		return risultato;
+//		Voto risultato=null;
+//		for(Voto v:this.listaVoti) {
+//			if(v.getNomeCorso().equals(nomeCorso)) {	//usare equals e non compareTo
+//				risultato=v;
+//				break;
+//			}
+//		}
+//		return risultato;
+		
+		return this.votiMap.get(nomeCorso);
 	}
 	
 	public String toString() {
